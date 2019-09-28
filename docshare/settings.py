@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework_jwt',
 
     'userauth',
     'document',
@@ -57,7 +57,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'docshare.urls'
 
-# AUTHENTICATION_BACKENDS = ('utils.validate.EmailOrUsernameModelBackend',)
 AUTH_USER_MODEL = "userauth.User"
 
 TEMPLATES = [
@@ -132,7 +131,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_AUTH_COOKIE': 'JWT'
 }
